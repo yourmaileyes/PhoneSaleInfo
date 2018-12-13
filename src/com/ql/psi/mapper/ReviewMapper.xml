@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ql.psi.mapper.ReviewMapper" >
+  <resultMap id="BaseResultMap" type="com.ql.psi.entity.Review" >
+    <id column="reviewid" property="reviewid" jdbcType="VARCHAR" />
+    <result column="context" property="context" jdbcType="VARCHAR" />
+    <result column="userid" property="userid" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+    <result column="time" property="time" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    reviewid, context, userid, type, time
+  </sql>
+  <select id="selectall" resultMap="BaseResultMap">
+  select * from review
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from review
+    where reviewid = #{reviewid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from review
+    where reviewid = #{reviewid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ql.psi.entity.Review" >
+    insert into review (reviewid, context, userid, 
+      type, time)
+    values (#{reviewid,jdbcType=VARCHAR}, #{context,jdbcType=VARCHAR}, #{userid,jdbcType=VARCHAR}, 
+      #{type,jdbcType=VARCHAR}, #{time,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ql.psi.entity.Review" >
+    insert into review
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="reviewid != null" >
+        reviewid,
+      </if>
+      <if test="context != null" >
+        context,
+      </if>
+      <if test="userid != null" >
+        userid,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="time != null" >
+        time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="reviewid != null" >
+        #{reviewid,jdbcType=VARCHAR},
+      </if>
+      <if test="context != null" >
+        #{context,jdbcType=VARCHAR},
+      </if>
+      <if test="userid != null" >
+        #{userid,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="time != null" >
+        #{time,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ql.psi.entity.Review" >
+    update review
+    <set >
+      <if test="context != null" >
+        context = #{context,jdbcType=VARCHAR},
+      </if>
+      <if test="userid != null" >
+        userid = #{userid,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="time != null" >
+        time = #{time,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where reviewid = #{reviewid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ql.psi.entity.Review" >
+    update review
+    set context = #{context,jdbcType=VARCHAR},
+      userid = #{userid,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
+      time = #{time,jdbcType=TIMESTAMP}
+    where reviewid = #{reviewid,jdbcType=VARCHAR}
+  </update>
+</mapper>

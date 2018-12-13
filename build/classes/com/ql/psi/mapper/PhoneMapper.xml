@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ql.psi.mapper.PhoneMapper" >
+  <resultMap id="BaseResultMap" type="com.ql.psi.entity.Phone" >
+    <id column="phoneid" property="phoneid" jdbcType="VARCHAR" />
+    <result column="phonename" property="phonename" jdbcType="VARCHAR" />
+    <result column="phonecontext" property="phonecontext" jdbcType="VARCHAR" />
+    <result column="phonelable" property="phonelable" jdbcType="VARCHAR" />
+    <result column="phonehref" property="phonehref" jdbcType="VARCHAR" />
+    <result column="phoneclass" property="phoneclass" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    phoneid, phonename, phonecontext, phonelable, phonehref, phoneclass
+  </sql>
+  <delete id="deletelike" parameterType="java.lang.String">
+  delete from likehome where phoneid = #{1} and userid = #{0}
+  </delete>
+  <select id="selectlike" parameterType="java.lang.String" resultMap="BaseResultMap">
+  select * from phone 
+  where phoneid = (select phoneid from likehome where userid = #{0})
+  </select>
+  <insert id="insetlike" parameterType="java.lang.String">
+  insert into likehome (userid,phoneid) values (#{0},#{1})
+  </insert>
+  <select id="selectall" resultMap="BaseResultMap">
+  select * from phone
+  </select>
+  <select id="selectphonebyclass" resultMap="BaseResultMap" parameterType="java.lang.String">
+  select * from phone
+  where phoneclass = #{0}
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from phone
+    where phoneid = #{phoneid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from phone
+    where phoneid = #{phoneid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ql.psi.entity.Phone" >
+    insert into phone (phoneid, phonename, phonecontext, 
+      phonelable, phonehref, phoneclass
+      )
+    values (#{phoneid,jdbcType=VARCHAR}, #{phonename,jdbcType=VARCHAR}, #{phonecontext,jdbcType=VARCHAR}, 
+      #{phonelable,jdbcType=VARCHAR}, #{phonehref,jdbcType=VARCHAR}, #{phoneclass,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ql.psi.entity.Phone" >
+    insert into phone
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="phoneid != null" >
+        phoneid,
+      </if>
+      <if test="phonename != null" >
+        phonename,
+      </if>
+      <if test="phonecontext != null" >
+        phonecontext,
+      </if>
+      <if test="phonelable != null" >
+        phonelable,
+      </if>
+      <if test="phonehref != null" >
+        phonehref,
+      </if>
+      <if test="phoneclass != null" >
+        phoneclass,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="phoneid != null" >
+        #{phoneid,jdbcType=VARCHAR},
+      </if>
+      <if test="phonename != null" >
+        #{phonename,jdbcType=VARCHAR},
+      </if>
+      <if test="phonecontext != null" >
+        #{phonecontext,jdbcType=VARCHAR},
+      </if>
+      <if test="phonelable != null" >
+        #{phonelable,jdbcType=VARCHAR},
+      </if>
+      <if test="phonehref != null" >
+        #{phonehref,jdbcType=VARCHAR},
+      </if>
+      <if test="phoneclass != null" >
+        #{phoneclass,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ql.psi.entity.Phone" >
+    update phone
+    <set >
+      <if test="phonename != null" >
+        phonename = #{phonename,jdbcType=VARCHAR},
+      </if>
+      <if test="phonecontext != null" >
+        phonecontext = #{phonecontext,jdbcType=VARCHAR},
+      </if>
+      <if test="phonelable != null" >
+        phonelable = #{phonelable,jdbcType=VARCHAR},
+      </if>
+      <if test="phonehref != null" >
+        phonehref = #{phonehref,jdbcType=VARCHAR},
+      </if>
+      <if test="phoneclass != null" >
+        phoneclass = #{phoneclass,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where phoneid = #{phoneid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ql.psi.entity.Phone" >
+    update phone
+    set phonename = #{phonename,jdbcType=VARCHAR},
+      phonecontext = #{phonecontext,jdbcType=VARCHAR},
+      phonelable = #{phonelable,jdbcType=VARCHAR},
+      phonehref = #{phonehref,jdbcType=VARCHAR},
+      phoneclass = #{phoneclass,jdbcType=VARCHAR}
+    where phoneid = #{phoneid,jdbcType=VARCHAR}
+  </update>
+</mapper>
