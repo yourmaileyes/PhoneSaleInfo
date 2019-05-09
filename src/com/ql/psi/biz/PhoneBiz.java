@@ -6,6 +6,8 @@ import com.ql.psi.entity.Phone;
 
 public interface PhoneBiz {
 	
+	boolean isliked(String userid,String phoneid);
+	
 	int deletelike(String userid,String phoneid);
     List<Phone> selectlike(String userid);
 	

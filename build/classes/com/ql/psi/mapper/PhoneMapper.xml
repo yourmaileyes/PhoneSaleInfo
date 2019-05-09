@@ -16,8 +16,8 @@
   delete from likehome where phoneid = #{1} and userid = #{0}
   </delete>
   <select id="selectlike" parameterType="java.lang.String" resultMap="BaseResultMap">
-  select * from phone 
-  where phoneid = (select phoneid from likehome where userid = #{0})
+  select * from phone,likehome 
+  WHERE phone.phoneid = likehome.phoneid AND likehome.userid = #{0} 
   </select>
   <insert id="insetlike" parameterType="java.lang.String">
   insert into likehome (userid,phoneid) values (#{0},#{1})

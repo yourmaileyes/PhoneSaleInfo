@@ -79,5 +79,17 @@ public class PhoneBizImpl implements PhoneBiz{
 		return phoneMapper.deletelike(userid, phoneid);
 	}
 
+	@Override
+	public boolean isliked(String userid, String phoneid) {
+		// TODO Auto-generated method stub
+		List<Phone> plist = phoneMapper.selectlike(userid);
+		for(Phone p:plist) {
+			if(p.getPhoneid().equals(phoneid)) {
+				return false;
+			}
+		}
+		return true;
+	}
+
 
 }

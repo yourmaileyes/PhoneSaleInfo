@@ -139,6 +139,10 @@ public class MainController {
 			pw.write("请您登录后再收藏！");
 			return;
 		}
+		if(!phoneBiz.isliked(user.getUseid(), phoneid)) {
+			pw.write("已经收藏该手机！");
+			return;
+		}
 		phoneBiz.insetlike(user.getUseid(), phoneid);
 		pw.write("收藏成功！");
 	}
